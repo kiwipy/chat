@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION=1.0-beta7
+VERSION=1.0
 #
 # Terminal chat program. (setup NFS mount for LAN messages)
 # Copyright: William Andersson 2024
