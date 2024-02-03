@@ -3,6 +3,7 @@
 - Share the directory via NFS for LAN use.<br>
   **or set it up on a ssh server!**
 - Color coded nicks.
+- The file WORDLIST created can be populated with "forbidden" words separated with spaces
 - Run toolbox-chat, create a nickname and enjoy!
 
 ## Usage
