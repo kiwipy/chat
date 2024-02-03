@@ -1,6 +1,7 @@
-# Simple terminal LAN or local chat
+# Simple terminal chat application
 - Run setup.sh to create a "chatroom".
-- Share the directory via NFS for LAN use.
+- Share the directory via NFS for LAN use.<br>
+  **or set it up on a ssh server!**
 - Color coded nicks.
 - Run toolbox-chat, create a nickname and enjoy!
 
@@ -18,5 +19,4 @@ All messages are sent to every user unless the message starts with @username<br>
 
 ## Limitations
 
-- This only works for local or LAN based chat.
 - Only shorter messages work, return key = send
