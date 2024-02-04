@@ -7,6 +7,7 @@
 - Run toolbox-chat, create a nickname and enjoy!
 - Root can send messages as "admin" via command line: --admin \<PATH> \<ROOM> \<"MESSAGE"><br>
   to all users that are online.
+- Block user by changing default room userfile ownership to root. 
 
 ## Usage
 Just press the following key
