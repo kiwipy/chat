@@ -10,7 +10,8 @@
 Just press the following key
 
 - w - to start typing a message
-- l - to list all users (online users show up in green)
+- u - to list all users (online users show up in green)
+- l - to list available chatrooms
 - c - change chatroom
 - r - to resend message if wrong nickname was entered
 - h - for help
