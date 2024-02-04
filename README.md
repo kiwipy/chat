@@ -17,7 +17,7 @@ Run **sudo toolbox-chat-setup --init** or **sudo ./setup.sh --init** to create t
 > Default server location /srv/toolbox-chat.<br>
 > Default chatroom "default".
 
->[!NOTE]
+>[!TIP]
 > Ban user by changing owner of corresponding /srv/toolbox-chat/default/username file to root.
 
 ## Usage
