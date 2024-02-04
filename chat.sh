@@ -5,30 +5,17 @@
 # Website:     https://github.com/william-andersson
 # License:     GPL
 #
-VERSION=1.3
+VERSION=1.4
 
-if [ ! -f "$HOME/.toolbox-chat" ];then
-	read -p "Set name: " ID
-	read -p "Set server path: " SERVER
-	if [ ! -d "$SERVER" ];then
-		echo "Invalid server location!"
-		exit 2
-	elif [ -f "$SERVER/default/$ID" ];then
-		echo "Username already exists!"
-		exit 2
-	else
-		echo "ID=$ID" > $HOME/.toolbox-chat
-		echo "PATH=$SERVER" >> $HOME/.toolbox-chat
-		echo "$ID=0" >> $SERVER/default/USER_LIST
-		touch $SERVER/default/$ID
-		chmod 622 $SERVER/default/$ID
-	fi	
+if [ "$1" == "--help" ];then
+	echo -e "Usage: $0 [OPTIONS]"
+	echo -e "Options only available for root (admin)\n"
+	echo -e "Options"
+	echo -e "--admin <PATH> <ROOM> <\"MESSAGE\">\tPATH = Parent server directory"
+	echo -e "\t\t\t\t\tROOM = Chatroom name"
+	echo -e "\t\t\t\t\tMESSAGE = Message to be sent"
+	exit 0
 fi
-
-ID="$(grep -m 1 'ID=' $HOME/.toolbox-chat | sed 's/.*=//')"
-SERVER="$(grep -m 1 'PATH=' $HOME/.toolbox-chat | sed 's/.*=//')"
-ROOM="default"
-WORDLIST=$(cat $SERVER/$ROOM/WORDLIST)
 
 function abort() {
 	# Ctrl-c SIGINT
@@ -40,7 +27,7 @@ trap abort SIGINT
 
 function change_room(){
 	if [ ! -d "$SERVER/$1" ];then
-		echo -e "\033[31m[$ID]: No such chatroom [$1]!\033[0m" >> $SERVER/$ROOM/$ID
+		echo -e "\033[91m[$ID]: No such chatroom [$1]!\033[0m" >> $SERVER/$ROOM/$ID
 		return
 	else
 		echo "" > $SERVER/$ROOM/$ID
@@ -70,8 +57,8 @@ function send(){
 			if [[ "${SAY,,}" == *"${word,,}"* ]];then
 				# check if string contains forbidden word
 				# ${VAR,,} converts both strings to lower case
-				echo -e "\033[31m[$ID]: No bad language!\033[0m" >> $SERVER/$ROOM/$ID
-				main
+				echo -e "\033[91m[$ID]: No bad language!\033[0m" >> $SERVER/$ROOM/$ID
+				return
 			fi
 		done
 		CALL_NAME=$(echo $SAY | cut -d " " -f1)
@@ -81,27 +68,30 @@ function send(){
 		# Send message to user
 		if [[ "$CALL_NAME" == *"@"* ]];then
 				if [ -f "$SERVER/$ROOM/$NAME" ];then
-					echo -e "\033[33m@[$NAME]\033[0m: $MSG" >> $SERVER/$ROOM/$ID
-					echo -e "\033[32m[$ID]\033[0m: $MSG" >> $SERVER/$ROOM/$NAME
+					echo -e "\033[93m@[$NAME]\033[0m: $MSG" >> $SERVER/$ROOM/$ID
+					echo -e "\033[92m[$ID]\033[0m: $MSG" >> $SERVER/$ROOM/$NAME
 				else
-					echo -e "\033[31m@[$NAME]: No such user! Try again using the resend (r) option.\033[0m" >> $SERVER/$ROOM/$ID
+					echo -e "\033[91m@[$NAME]: No such user! Try again using the resend (r) option.\033[0m" >> $SERVER/$ROOM/$ID
 					echo $MSG > $HOME/.tmp-toolbox-chat
 				fi
 		else
 		# Send message to all user
 			for id in $(cat $SERVER/$ROOM/USER_LIST | sed 's/=.*//');do
 				if [ "$id" == "$ID" ];then
-					echo -e "\033[33m[$ID]\033[0m: $SAY" >> $SERVER/$ROOM/$ID
+					echo -e "\033[93m[$ID]\033[0m: $SAY" >> $SERVER/$ROOM/$ID
 				else
 					# Only send public messages to online users
 					if [ "$(grep $id $SERVER/$ROOM/USER_LIST | sed 's/.*=//')" != "0" ];then
-						echo -e "\033[97m[$ID]\033[0m: $SAY" >> $SERVER/$ROOM/$id
+						if [ "$ID" == "admin" ];then
+							echo -e "\033[94m[$ID]: $SAY\033[0m" >> $SERVER/$ROOM/$id
+						else
+							echo -e "\033[97m[$ID]\033[0m: $SAY" >> $SERVER/$ROOM/$id
+						fi
 					fi
 				fi
 			done
 		fi
 	fi
-	main
 }
 
 function repeat(){
@@ -188,6 +178,45 @@ function main(){
 		fi
 	done
 }
+
+if [ "$1" == "--admin" ];then
+	if [[ $EUID -ne 0 ]]; then
+		echo "Only root can send messages as admin!"
+		exit 1
+	else
+		ID="admin"
+		SERVER="$2"
+		ROOM="$3"
+		send "${@:4}"
+		exit 0
+	fi
+fi
+
+if [ ! -f "$HOME/.toolbox-chat" ];then
+	read -p "Set name: " ID
+	read -p "Set server path: " SERVER
+	if [ ! -d "$SERVER" ];then
+		echo "Invalid server location!"
+		exit 2
+	elif [ -f "$SERVER/default/$ID" ];then
+		echo "Username already exists!"
+		exit 2
+	elif [ "$ID" == "admin" ];then
+		echo "Invalid username!"
+		exit 2
+	else
+		echo "ID=$ID" > $HOME/.toolbox-chat
+		echo "PATH=$SERVER" >> $HOME/.toolbox-chat
+		echo "$ID=0" >> $SERVER/default/USER_LIST
+		touch $SERVER/default/$ID
+		chmod 622 $SERVER/default/$ID
+	fi	
+fi
+
+ID="$(grep -m 1 'ID=' $HOME/.toolbox-chat | sed 's/.*=//')"
+SERVER="$(grep -m 1 'PATH=' $HOME/.toolbox-chat | sed 's/.*=//')"
+ROOM="default"
+WORDLIST=$(cat $SERVER/$ROOM/WORDLIST)
 
 set_status
 main
