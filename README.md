@@ -34,5 +34,5 @@ Run toolbox-chat and press the following keys to...
 All messages are sent to every user unless the message starts with @username<br>
 
 ## Limitations
-> [!IMPORTANT]
-> Only shorter messages work, return key = send
+
+- Only shorter messages work, return key = send
