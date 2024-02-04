@@ -3,7 +3,7 @@
 
 ## Make it work
 
-Set this up on a ssh server for users to chat with each other :)<br>
+Set this up on a ssh server for users to chat with each other :smiley:<br>
 Run **sudo toolbox-chat-setup --init** or **sudo ./setup.sh --init** to create the server.
 
 - Color coded nicks.
