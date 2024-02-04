@@ -11,7 +11,7 @@ Just press the following key
 
 - w - to start typing a message
 - l - to list all users (online users show up in green)
-- c - clear your messages
+- c - change chatroom
 - r - to resend message if wrong nickname was entered
 - h - for help
 - q - to quit
@@ -21,3 +21,8 @@ All messages are sent to every user unless the message starts with @username<br>
 ## Limitations
 
 - Only shorter messages work, return key = send
+
+## Updates
+
+- Only private messages are sent to offline users.
+- Ability to change chatrooms (setup beforehand with toolbox-chat-setup)
