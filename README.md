@@ -4,18 +4,17 @@
 ## Make it work
 
 Set this up on a ssh server for users to chat with each other :smiley:<br>
-Run **sudo toolbox-chat-setup --init** or **sudo ./setup.sh --init** to create the server.
+Run **sudo toolbox-chat-setup --init** or **sudo ./setup.sh --init** to create the server.<br>
 
-- Color coded nicks.
-- The WORDLIST file created can be populated with "forbidden" words separated with spaces
+Default server location /srv/toolbox-chat.<br>
+Default chatroom "default".<br>
+
+:arrow_right: Color coded nicks.<br>
+:arrow_right: The WORDLIST file created can be populated with "forbidden" words separated with spaces<br>
 
 > [!NOTE]
 > Only private messages are sent to offline users.<br>
 > Ability to change chatrooms (setup beforehand with **sudo toolbox-chat-setup --add**).<br>
-
->[!NOTE]
-> Default server location /srv/toolbox-chat.<br>
-> Default chatroom "default".
 
 >[!TIP]
 > Ban user by changing owner of corresponding /srv/toolbox-chat/default/username file to root.
