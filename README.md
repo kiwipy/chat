@@ -5,6 +5,8 @@
 - Color coded nicks.
 - The file WORDLIST created can be populated with "forbidden" words separated with spaces
 - Run toolbox-chat, create a nickname and enjoy!
+- Root can send messages as "admin" via command line: --admin \<PATH> \<ROOM> \<"MESSAGE"><br>
+  to all users that are online.
 
 ## Usage
 Just press the following key
