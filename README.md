@@ -15,7 +15,7 @@ Default server location is /srv/toolbox-chat and the default chatroom is "defaul
 
 >[!TIP]
 > :green_square: Ban user by changing owner of corresponding /srv/toolbox-chat/default/username file to root.<br>
-> :green_square: Send message to everyone as admin via command line with **sudo toolbox-chat --admin \<ROOM\> \<"MESSAGE"\>**.<br>
+> :green_square: Send message to everyone as admin via command **sudo toolbox-chat --admin \<ROOM\> \<"MESSAGE"\>**.<br>
 
 ## Usage
 Run toolbox-chat and press the following keys to...
