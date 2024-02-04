@@ -5,15 +5,14 @@
 # Website:     https://github.com/william-andersson
 # License:     GPL
 #
-VERSION=1.4
+VERSION=2.0
 
 if [ "$1" == "--help" ];then
 	echo -e "Usage: $0 [OPTIONS]"
 	echo -e "Options only available for root (admin)\n"
 	echo -e "Options"
-	echo -e "--admin <PATH> <ROOM> <\"MESSAGE\">\tPATH = Parent server directory"
-	echo -e "\t\t\t\t\tROOM = Chatroom name"
-	echo -e "\t\t\t\t\tMESSAGE = Message to be sent"
+	echo -e "--admin <ROOM> <\"MESSAGE\">\tROOM = Chatroom name"
+	echo -e "\t\t\t\tMESSAGE = Message to be sent"
 	exit 0
 fi
 
@@ -27,26 +26,26 @@ trap abort SIGINT
 
 function change_room(){
 	if [ ! -d "$SERVER/$1" ];then
-		echo -e "\033[91m[$ID]: No such chatroom [$1]!\033[0m" >> $SERVER/$ROOM/$ID
+		echo -e "\033[91m[$USER]: No such chatroom [$1]!\033[0m" >> $SERVER/$ROOM/$USER
 		return
 	else
-		echo "" > $SERVER/$ROOM/$ID
+		echo "" > $SERVER/$ROOM/$USER
 		set_status
 		ROOM=$1
-		if [ ! $(grep $ID $SERVER/$ROOM/USER_LIST) ];then
-			echo "$ID=1" >> $SERVER/$ROOM/USER_LIST
-			touch $SERVER/$ROOM/$ID
-			chmod 622 $SERVER/$ROOM/$ID
+		if [ ! $(grep $USER $SERVER/$ROOM/USER_LIST) ];then
+			echo "$USER=1" >> $SERVER/$ROOM/USER_LIST
+			touch $SERVER/$ROOM/$USER
+			chmod 622 $SERVER/$ROOM/$USER
 		fi
 	fi
 }
 
 function set_status(){
-	STATUS=$(grep $ID $SERVER/$ROOM/USER_LIST | sed 's/.*=//')
+	STATUS=$(grep $USER $SERVER/$ROOM/USER_LIST | sed 's/.*=//')
 	if [ "$STATUS" == "0" ];then
-		sed -i 's/'$ID=$STATUS'/'$ID=1'/' $SERVER/$ROOM/USER_LIST
+		sed -i 's/'$USER=$STATUS'/'$USER=1'/' $SERVER/$ROOM/USER_LIST
 	else
-		sed -i 's/'$ID=$STATUS'/'$ID=0'/' $SERVER/$ROOM/USER_LIST
+		sed -i 's/'$USER=$STATUS'/'$USER=0'/' $SERVER/$ROOM/USER_LIST
 	fi
 }
 
@@ -57,7 +56,7 @@ function send(){
 			if [[ "${SAY,,}" == *"${word,,}"* ]];then
 				# check if string contains forbidden word
 				# ${VAR,,} converts both strings to lower case
-				echo -e "\033[91m[$ID]: No bad language!\033[0m" >> $SERVER/$ROOM/$ID
+				echo -e "\033[91m[$USER]: No bad language!\033[0m" >> $SERVER/$ROOM/$USER
 				return
 			fi
 		done
@@ -68,24 +67,24 @@ function send(){
 		# Send message to user
 		if [[ "$CALL_NAME" == *"@"* ]];then
 				if [ -f "$SERVER/$ROOM/$NAME" ];then
-					echo -e "\033[93m@[$NAME]\033[0m: $MSG" >> $SERVER/$ROOM/$ID
-					echo -e "\033[92m[$ID]\033[0m: $MSG" >> $SERVER/$ROOM/$NAME
+					echo -e "\033[93m@[$NAME]\033[0m: $MSG" >> $SERVER/$ROOM/$USER
+					echo -e "\033[92m[$USER]\033[0m: $MSG" >> $SERVER/$ROOM/$NAME
 				else
-					echo -e "\033[91m@[$NAME]: No such user! Try again using the resend (r) option.\033[0m" >> $SERVER/$ROOM/$ID
+					echo -e "\033[91m@[$NAME]: No such user! Try again using the resend (r) option.\033[0m" >> $SERVER/$ROOM/$USER
 					echo $MSG > $HOME/.tmp-toolbox-chat
 				fi
 		else
 		# Send message to all user
 			for id in $(cat $SERVER/$ROOM/USER_LIST | sed 's/=.*//');do
-				if [ "$id" == "$ID" ];then
-					echo -e "\033[93m[$ID]\033[0m: $SAY" >> $SERVER/$ROOM/$ID
+				if [ "$id" == "$USER" ];then
+					echo -e "\033[93m[$USER]\033[0m: $SAY" >> $SERVER/$ROOM/$USER
 				else
 					# Only send public messages to online users
 					if [ "$(grep $id $SERVER/$ROOM/USER_LIST | sed 's/.*=//')" != "0" ];then
 						if [ "$ID" == "admin" ];then
 							echo -e "\033[94m[$ID]: $SAY\033[0m" >> $SERVER/$ROOM/$id
 						else
-							echo -e "\033[97m[$ID]\033[0m: $SAY" >> $SERVER/$ROOM/$id
+							echo -e "\033[97m[$USER]\033[0m: $SAY" >> $SERVER/$ROOM/$id
 						fi
 					fi
 				fi
@@ -124,23 +123,23 @@ function main(){
 		SAY=""
 		clear
 		header
-		cat $SERVER/$ROOM/$ID
+		cat $SERVER/$ROOM/$USER
 		tput cup 21 0
 		repeat 80 "_"
-		read -t 5 -n 1 -p ">> " CMD
+		read -t 1 -n 1 -p ">> " CMD
 		echo ""
 		if [ "$CMD" == "q" ];then #Quit
 			set_status
-			echo "" > $SERVER/$ROOM/$ID
+			echo "" > $SERVER/$ROOM/$USER
 			reset
 			exit 0
 			
 		elif [ "$CMD" == "l" ];then #List rooms
-			AVA_ROOMS=()
+			ROOM_LIST=()
 				for room in $(ls $SERVER);do
-					AVA_ROOMS+=("[$room]")
+					ROOM_LIST+=("[$room]")
 				done
-			echo -e "Chatrooms: ${AVA_ROOMS[@]}" >> $SERVER/$ROOM/$ID
+			echo -e "Chatrooms: ${ROOM_LIST[@]}" >> $SERVER/$ROOM/$USER
 		
 		elif [ "$CMD" == "c" ];then #Change room
 			read -p "Enter room: " SAY
@@ -155,15 +154,15 @@ function main(){
 			send "$SAY $(cat $HOME/.tmp-toolbox-chat)"
 			
 		elif [ "$CMD" == "u" ];then #List users	
-			USERS=()
-			for USER in $(cat $SERVER/$ROOM/USER_LIST | sed 's/=.*//');do
-				if [ "$(grep $USER $SERVER/$ROOM/USER_LIST | sed 's/.*=//')" == "1" ];then
-					USERS+=("\033[32m[$USER]\033[0m")
+			USER_LIST=()
+			for user in $(cat $SERVER/$ROOM/USER_LIST | sed 's/=.*//');do
+				if [ "$(grep $user $SERVER/$ROOM/USER_LIST | sed 's/.*=//')" == "1" ];then
+					USER_LIST+=("\033[32m[$user]\033[0m")
 				else
-					USERS+=("[$USER]")
+					USER_LIST+=("[$user]")
 				fi
 			done
-			echo -e "Users: ${USERS[@]}" >> $SERVER/$ROOM/$ID	
+			echo -e "Users: ${USER_LIST[@]}" >> $SERVER/$ROOM/$USER	
 			
 		elif [ "$CMD" == "h" ];then #Help
 			echo -e "q (Quit)\t\tw (Start message)\t\tl (List rooms)\
@@ -185,42 +184,21 @@ if [ "$1" == "--admin" ];then
 		exit 1
 	else
 		ID="admin"
-		SERVER="$2"
-		ROOM="$3"
-		send "${@:4}"
+		SERVER="/srv/toolbox-chat"
+		ROOM="$2"
+		send "${@:3}"
 		exit 0
 	fi
 fi
 
-if [ ! -f "$HOME/.toolbox-chat" ];then
-	read -p "Set name: " ID
-	read -p "Set server path: " SERVER
-	if [ ! -d "$SERVER" ];then
-		echo "Invalid server location!"
-		exit 2
-	elif [ -f "$SERVER/default/$ID" ];then
-		echo "Username already exists!"
-		exit 2
-	elif [ "$ID" == "admin" ];then
-		echo "Invalid username!"
-		exit 2
-	else
-		echo "ID=$ID" > $HOME/.toolbox-chat
-		echo "PATH=$SERVER" >> $HOME/.toolbox-chat
-		echo "$ID=0" >> $SERVER/default/USER_LIST
-		touch $SERVER/default/$ID
-		chmod 622 $SERVER/default/$ID
-	fi	
-fi
-
-ID="$(grep -m 1 'ID=' $HOME/.toolbox-chat | sed 's/.*=//')"
-SERVER="$(grep -m 1 'PATH=' $HOME/.toolbox-chat | sed 's/.*=//')"
+SERVER="/srv/toolbox-chat"
 ROOM="default"
 WORDLIST=$(cat $SERVER/$ROOM/WORDLIST)
 
-if [ "$UID" != "$(stat -L -c "%u" $SERVER/$ROOM/$ID)" ];then
-	echo "Wrong user ID!"
-	exit 1
+if [ ! -f "$SERVER/$ROOM/$USER" ];then
+	echo "$USER=0" >> $SERVER/$ROOM/USER_LIST
+	touch $SERVER/$ROOM/$USER
+	chmod 622 $SERVER/$ROOM/$USER
 fi
 
 set_status
