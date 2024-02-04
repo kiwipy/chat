@@ -218,5 +218,10 @@ SERVER="$(grep -m 1 'PATH=' $HOME/.toolbox-chat | sed 's/.*=//')"
 ROOM="default"
 WORDLIST=$(cat $SERVER/$ROOM/WORDLIST)
 
+if [ "$UID" != "$(stat -L -c "%u" $SERVER/$ROOM/$ID)" ];then
+	echo "Wrong user ID!"
+	exit 1
+fi
+
 set_status
 main
