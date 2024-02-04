@@ -11,7 +11,9 @@ Run **sudo toolbox-chat-setup --init** or **sudo ./setup.sh --init** to create t
 
 > [!NOTE]
 > Only private messages are sent to offline users.<br>
-> Ability to change chatrooms (setup beforehand with **sudo toolbox-chat-setup --add**).
+> Ability to change chatrooms (setup beforehand with **sudo toolbox-chat-setup --add**).<br>
+> Default server location /srv/toolbox-chat.<br>
+> Default chatroom "default"
 
 ## Usage
 Run toolbox-chat and press the following keys to...
