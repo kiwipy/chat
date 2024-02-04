@@ -144,8 +144,14 @@ function main(){
 			reset
 			exit 0
 			
+		elif [ "$CMD" == "l" ];then #List rooms
+			AVA_ROOMS=()
+				for room in $(ls $SERVER);do
+					AVA_ROOMS+=("[$room]")
+				done
+			echo -e "Chatrooms: ${AVA_ROOMS[@]}" >> $SERVER/$ROOM/$ID
+		
 		elif [ "$CMD" == "c" ];then #Change room
-			echo -e "Chatrooms: $(ls /chat/)" >> $SERVER/$ROOM/$ID ### Echo before?
 			read -p "Enter room: " SAY
 			change_room "$SAY"
 			
@@ -157,7 +163,7 @@ function main(){
 			read -p "To user: " SAY
 			send "$SAY $(cat $HOME/.tmp-toolbox-chat)"
 			
-		elif [ "$CMD" == "l" ];then #List users	
+		elif [ "$CMD" == "u" ];then #List users	
 			USERS=()
 			for USER in $(cat $SERVER/$ROOM/USER_LIST | sed 's/=.*//');do
 				if [ "$(grep $USER $SERVER/$ROOM/USER_LIST | sed 's/.*=//')" == "1" ];then
@@ -169,12 +175,13 @@ function main(){
 			echo -e "Users: ${USERS[@]}" >> $SERVER/$ROOM/$ID	
 			
 		elif [ "$CMD" == "h" ];then #Help
-			echo -e "q (Quit)\t\tl (List users)\t\tc (Change room)\
-					\nw (Start message)\tr (Resend)\t\th (Help)"
+			echo -e "q (Quit)\t\tu (List users)\t\tl (List rooms)\
+					\nc (Change room)\t\tw (Start message)\tr (Resend)\
+					\nh (Help)"
 			echo ""
 			echo "Write to specific user:"
 			echo "Start message with @USERNAME"
-			echo "To resend faild message only type @USERNAME"
+			echo "To resend failed message press (r) and only type @USERNAME"
 			echo ""
 			read -p "Paused, press enter to continue..."
 		fi
