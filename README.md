@@ -14,8 +14,8 @@ Default server location is /srv/toolbox-chat and the default chatroom is "defaul
 > :arrow_right: The WORDLIST file created can be populated with "forbidden" words separated with spaces.<br>
 
 >[!TIP]
-> :arrow_right: Ban user by changing owner of corresponding /srv/toolbox-chat/default/username file to root.<br>
-> :arrow_right: Send message as admin via command line with **sudo toolbox-chat --admin \<ROOM\> \<"MESSAGE"\>.<br>
+> :white_check_mark: Ban user by changing owner of corresponding /srv/toolbox-chat/default/username file to root.<br>
+> :white_check_mark: Send message as admin via command line with **sudo toolbox-chat --admin \<ROOM\> \<"MESSAGE"\>.<br>
 
 ## Usage
 Run toolbox-chat and press the following keys to...
