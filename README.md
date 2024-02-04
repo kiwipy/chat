@@ -1,6 +1,6 @@
 # Simple terminal chat application
-- Run setup.sh to create a "chatroom".
-- Share the directory via NFS for LAN use.<br>
+- Run toolbox-chat-setup or ./setup.sh to create a "server" or new "chatroom".
+- Share the server directory via NFS for LAN use.<br>
   **or set it up on a ssh server!**
 - Color coded nicks.
 - The file WORDLIST created can be populated with "forbidden" words separated with spaces
