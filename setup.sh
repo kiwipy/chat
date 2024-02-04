@@ -1,5 +1,11 @@
 #!/bin/bash
 #
+# File for:    chat (Github version)
+# Copyright:   William Andersson 2024
+# Website:     https://github.com/william-andersson
+# License:     GPL
+#
+#
 # - Setup initial parent path for toolbox-chat
 # - Add subdirectory path "chatroom"
 #

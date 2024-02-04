@@ -1,11 +1,12 @@
 #!/bin/bash
+#
+# Application: chat (Github version)
+# Copyright:   William Andersson 2024
+# Website:     https://github.com/william-andersson
+# License:     GPL
+#
 VERSION=1.3
-#
-# Terminal chat program. (setup NFS mount for LAN messages or use ssh)
-# Copyright: William Andersson 2024
-# Website: https://github.com/william-andersson
-# License: GPL
-#
+
 if [ ! -f "$HOME/.toolbox-chat" ];then
 	read -p "Set name: " ID
 	read -p "Set server path: " SERVER
@@ -175,8 +176,8 @@ function main(){
 			echo -e "Users: ${USERS[@]}" >> $SERVER/$ROOM/$ID	
 			
 		elif [ "$CMD" == "h" ];then #Help
-			echo -e "q (Quit)\t\tu (List users)\t\tl (List rooms)\
-					\nc (Change room)\t\tw (Start message)\tr (Resend)\
+			echo -e "q (Quit)\t\tw (Start message)\t\tl (List rooms)\
+					\nc (Change room)\t\tu (List users)\t\t\tr (Resend)\
 					\nh (Help)"
 			echo ""
 			echo "Write to specific user:"
