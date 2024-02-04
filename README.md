@@ -23,11 +23,11 @@ Run **sudo toolbox-chat-setup --init** or **sudo ./setup.sh --init** to create t
 ## Usage
 Run toolbox-chat and press the following keys to...
 
-* *w - to start typing a message*
-* *u - to list all users (online users show up in green)*
-* *l - to list available chatrooms*
+* *w - start typing a message*
+* *u - list all users (online users show up in green)*
+* *l - list available chatrooms*
 * *c - change chatroom*
-* *r - to resend message if wrong nickname was entered*
+* *r - resend message if wrong nickname was entered*
 * *h - for help*
 * *q - to quit*
 
