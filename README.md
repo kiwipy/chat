@@ -9,13 +9,13 @@ Default server location is /srv/toolbox-chat and the default chatroom is "defaul
 
 
 > [!NOTE]
-> :arrow_right: Only private messages are sent to offline users.<br>
-> :arrow_right: Ability to change chatrooms (setup beforehand with **sudo toolbox-chat-setup --add**).<br>
-> :arrow_right: The WORDLIST file created can be populated with "forbidden" words separated with spaces.<br>
+> :blue_square: Only private messages are sent to offline users.<br>
+> :blue_square: Ability to change chatrooms (setup beforehand with **sudo toolbox-chat-setup --add**).<br>
+> :blue_square: The WORDLIST file created can be populated with "forbidden" words separated with spaces.<br>
 
 >[!TIP]
-> :white_check_mark: Ban user by changing owner of corresponding /srv/toolbox-chat/default/username file to root.<br>
-> :white_check_mark: Send message as admin via command line with **sudo toolbox-chat --admin \<ROOM\> \<"MESSAGE"\>.<br>
+> :green_square: Ban user by changing owner of corresponding /srv/toolbox-chat/default/username file to root.<br>
+> :green_square: Send message as admin via command line with **sudo toolbox-chat --admin \<ROOM\> \<"MESSAGE"\>.<br>
 
 ## Usage
 Run toolbox-chat and press the following keys to...
