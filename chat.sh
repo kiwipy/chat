@@ -201,5 +201,10 @@ if [ ! -f "$SERVER/$ROOM/$USER" ];then
 	chmod 622 $SERVER/$ROOM/$USER
 fi
 
+if [ "$UID" != "$(stat -L -c "%u" $SERVER/$ROOM/$USER)" ];then
+	echo "Username $USER is locked!"
+	exit 1
+fi
+
 set_status
 main
