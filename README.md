@@ -20,13 +20,13 @@ Default server location is /srv/toolbox-chat and the default chatroom is "defaul
 ## Usage
 Run toolbox-chat and press the following keys to...
 
-* *w - start typing a message*
-* *u - list all users (online users show up in green)*
-* *l - list available chatrooms*
-* *c - change chatroom*
-* *r - resend message if wrong nickname was entered*
-* *h - for help*
-* *q - to quit*
+> * *w - start typing a message*
+> * *u - list all users (online users show up in green)*
+> * *l - list available chatrooms*
+> * *c - change chatroom*
+> * *r - resend message if wrong nickname was entered*
+> * *h - for help*
+> * *q - to quit*
 
 All messages are sent to every user unless the message starts with @username<br>
 
