@@ -1,5 +1,5 @@
 # Simple terminal chat application
-![Screenshot](https://github.com/william-andersson/chat/blob/main/Screenshot.png)
+![Screenshot](https://github.com/william-andersson/chat/blob/main/Screenshot2.png)
 
 ## Make it work
 
