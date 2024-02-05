@@ -1,9 +1,9 @@
 # Simple terminal chat application
+### Let users on ssh server chat with each other! :smiley:<br>
 ![Screenshot](https://github.com/william-andersson/chat/blob/main/Screenshot2.png)
 
 ## Make it work
 
-Set this up on a ssh server for users to chat with each other :smiley:<br>
 Run **sudo toolbox-chat-setup --init** or **sudo ./setup.sh --init** to create the server.<br>
 Default server location is /srv/toolbox-chat and the default chatroom is "default".<br>
 
