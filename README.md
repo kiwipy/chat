@@ -36,6 +36,6 @@ Only shorter messages work, return key = send
 
 ## TODO
 
-- [x] Adapt to window size<br>
-- [ ] Maybe add support for multiline message<br>
-- [ ] Ssh server signup feature
+:white_check_mark: Adapt to window size<br>
+:white_large_square: Maybe add support for multiline message<br>
+:white_large_square: Ssh server signup feature
