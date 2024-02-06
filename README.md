@@ -18,7 +18,7 @@ Default server location is /srv/toolbox-chat and the default chatroom is "defaul
 > :green_square: Send message to everyone as admin with **`sudo toolbox-chat --admin \<ROOM\> \<"MESSAGE"\>`**.<br>
 
 ## Usage
-Run `toolbox-chat` and press the following keys to...
+Run **`toolbox-chat`** and press the following keys to...
 
 > *w - start typing a message*<br>
 > *u - list all users (online users show up in green)*<br>
@@ -36,6 +36,6 @@ Only shorter messages work, return key = send
 
 ## TODO
 
-> :white_check_mark: Adapt to window size<br>
-> :white_large_square: Maybe add support for multiline message<br>
-> :white_large_square: Ssh server signup feature
+> - [x] Adapt to window size<br>
+> - [ ] Maybe add support for multiline message<br>
+> - [ ] Ssh server signup feature
