@@ -38,4 +38,5 @@ Only shorter messages work, return key = send
 
 > - [x] Adapt to window size<br>
 > - [ ] Maybe add support for multiline message<br>
+> - [ ] Maybe add a chatbot<br>
 > - [ ] Ssh server signup solution
