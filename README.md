@@ -1,4 +1,4 @@
-<h1 aligh=center>Simple terminal chat application</h1>
+# Simple terminal chat application
 ### Let users on ssh server chat with each other! :smiley:<br>
 ![Screenshot](https://github.com/william-andersson/chat/blob/main/Screenshot2.png)
 
