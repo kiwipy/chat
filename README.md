@@ -4,7 +4,7 @@
 
 ## Make it work
 
-Run `sudo toolbox-chat-setup --init` or **sudo ./setup.sh --init** to create the server.<br>
+Run **`sudo toolbox-chat-setup --init`** or **`sudo ./setup.sh --init`** to create the server.<br>
 Default server location is /srv/toolbox-chat and the default chatroom is "default".<br>
 
 
