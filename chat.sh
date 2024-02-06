@@ -5,7 +5,7 @@
 # Website:     https://github.com/william-andersson
 # License:     GPL
 #
-VERSION=2.0
+VERSION=2.1
 
 if [ "$1" == "--help" ];then
 	echo -e "Usage: $0 [OPTIONS]"
@@ -106,26 +106,30 @@ function repeat(){
 	done
 }
 
-function header(){
+function refresh(){
+	clear
+	HEIGHT=$(tput lines)
+	WIDTH=$(tput cols)
 	count="0"
 	for i in $(cat $SERVER/$ROOM/USER_LIST);do
 		((count+=1))
 	done
 	HEADER="Chatroom: $( echo $ROOM | sed 's:.*/::') | Users: $count"
 	HEADER_LEN=${#HEADER}
-	HEADER_SUB="$((76-HEADER_LEN))"
+	HEADER_SUB="$((WIDTH-HEADER_LEN-4))"
 	PANNING="$((HEADER_SUB/2))"
 	echo "$(repeat $PANNING '=')[ $HEADER ]$(repeat $PANNING '=')"
+	
+	cat $SERVER/$ROOM/$USER
+	BOTTOM=$((HEIGHT-3))
+	tput cup $BOTTOM 0
+	repeat $WIDTH "_"
 }
 
 function main(){
 	while true;do
 		SAY=""
-		clear
-		header
-		cat $SERVER/$ROOM/$USER
-		tput cup 21 0
-		repeat 80 "_"
+		refresh
 		read -t 1 -n 1 -p ">> " CMD
 		echo ""
 		if [ "$CMD" == "q" ];then #Quit
