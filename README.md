@@ -36,5 +36,6 @@ Only shorter messages work, return key = send
 
 ## TODO
 
-> * Adapt to window size<br>
-> * Ssh server signup feature
+- [x] Adapt to window size<br>
+- [ ] Maybe add support for multiline message<br>
+- [ ] Ssh server signup feature
