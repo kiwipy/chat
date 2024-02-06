@@ -38,4 +38,4 @@ Only shorter messages work, return key = send
 
 > - [x] Adapt to window size<br>
 > - [ ] Maybe add support for multiline message<br>
-> - [ ] Ssh server signup feature
+> - [ ] Ssh server signup solution
