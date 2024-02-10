@@ -165,10 +165,10 @@ function main(){
 			echo -e "Users: ${USER_LIST[@]}" >> $SERVER/$ROOM/$USER	
 			
 		elif [ "$CMD" == "h" ];then #Help
-			tput cup $((HEIGHT-11)) 0
+			tput cup $((HEIGHT-13)) 0
 			tput ed
 			repeat $WIDTH "_"
-			echo ""
+			echo -e "\nVersion: $VERSION\n"
 			echo -e "q (Quit)\t\tw (Start message)\t\tl (List rooms)\
 					\nc (Change room)\t\tu (List users)\t\t\tr (Resend)\
 					\nh (Help)"
