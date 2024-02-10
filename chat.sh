@@ -1,11 +1,5 @@
 #!/bin/bash
-#
-# Application: chat (Github version)
-# Copyright:   William Andersson 2024
-# Website:     https://github.com/william-andersson
-# License:     GPL
-#
-VERSION=2.1
+VERSION=2.3
 
 if [ "$1" == "--help" ];then
 	echo -e "Usage: $0 [OPTIONS]"
@@ -17,15 +11,17 @@ if [ "$1" == "--help" ];then
 fi
 
 function abort() {
-	# Ctrl-c SIGINT
+	# Ctrl-c SIGINT function
+	echo "" > $SERVER/$ROOM/$USER
 	set_status
 	reset
+	tput cnorm
 	exit 0
 }
 trap abort SIGINT
 
 function change_room(){
-	if [ ! -d "$SERVER/$1" ];then
+	if [ -z "$1" ] || [ ! -d "$SERVER/$1" ];then
 		echo -e "\033[91m[$USER]: No such chatroom [$1]!\033[0m" >> $SERVER/$ROOM/$USER
 		return
 	else
@@ -107,7 +103,7 @@ function repeat(){
 }
 
 function refresh(){
-	clear
+	tput cup 0 0
 	HEIGHT=$(tput lines)
 	WIDTH=$(tput cols)
 	count="0"
@@ -118,11 +114,12 @@ function refresh(){
 	HEADER_LEN=${#HEADER}
 	HEADER_SUB="$((WIDTH-HEADER_LEN-4))"
 	PANNING="$((HEADER_SUB/2))"
-	echo "$(repeat $PANNING '=')[ $HEADER ]$(repeat $PANNING '=')"
-	
-	cat $SERVER/$ROOM/$USER
-	BOTTOM=$((HEIGHT-3))
-	tput cup $BOTTOM 0
+	tput ed
+	echo -e "$(repeat $PANNING '=')[ $HEADER ]$(repeat $PANNING '=')"
+
+	tail -n $((HEIGHT-5)) $SERVER/$ROOM/$USER
+
+	tput cup $((HEIGHT-3)) 0
 	repeat $WIDTH "_"
 }
 
@@ -131,12 +128,8 @@ function main(){
 		SAY=""
 		refresh
 		read -t 1 -n 1 -p ">> " CMD
-		echo ""
 		if [ "$CMD" == "q" ];then #Quit
-			set_status
-			echo "" > $SERVER/$ROOM/$USER
-			reset
-			exit 0
+			abort
 			
 		elif [ "$CMD" == "l" ];then #List rooms
 			ROOM_LIST=()
@@ -146,14 +139,17 @@ function main(){
 			echo -e "Chatrooms: ${ROOM_LIST[@]}" >> $SERVER/$ROOM/$USER
 		
 		elif [ "$CMD" == "c" ];then #Change room
+			tput cup $((HEIGHT-2)) 0
 			read -p "Enter room: " SAY
 			change_room "$SAY"
 			
 		elif [ "$CMD" == "w" ];then #Start message
+			tput cup $((HEIGHT-2)) 0
 			read -p "Say: " SAY
 			send "$SAY"
 			
 		elif [ "$CMD" == "r" ];then #Resend
+			tput cup $((HEIGHT-2)) 0
 			read -p "To user: " SAY
 			send "$SAY $(cat $HOME/.tmp-toolbox-chat)"
 			
@@ -169,6 +165,10 @@ function main(){
 			echo -e "Users: ${USER_LIST[@]}" >> $SERVER/$ROOM/$USER	
 			
 		elif [ "$CMD" == "h" ];then #Help
+			tput cup $((HEIGHT-11)) 0
+			tput ed
+			repeat $WIDTH "_"
+			echo ""
 			echo -e "q (Quit)\t\tw (Start message)\t\tl (List rooms)\
 					\nc (Change room)\t\tu (List users)\t\t\tr (Resend)\
 					\nh (Help)"
@@ -210,5 +210,7 @@ if [ "$UID" != "$(stat -L -c "%u" $SERVER/$ROOM/$USER)" ];then
 	exit 1
 fi
 
+clear
+tput civis
 set_status
 main
