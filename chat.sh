@@ -1,5 +1,11 @@
 #!/bin/bash
-VERSION=2.3
+#
+# Application: chat (Github version)
+# Copyright:   William Andersson 2024
+# Website:     https://github.com/william-andersson
+# License:     GPL
+#
+VERSION=2.4
 
 if [ "$1" == "--help" ];then
 	echo -e "Usage: $0 [OPTIONS]"
@@ -133,57 +139,67 @@ function main(){
 		SAY=""
 		refresh
 		read -t 1 -n 1 -p ">> " CMD
-		if [ "$CMD" == "q" ];then #Quit
-			abort
-			
-		elif [ "$CMD" == "l" ];then #List rooms
-			ROOM_LIST=()
-				for room in $(ls $SERVER);do
-					ROOM_LIST+=("[$room]")
-				done
-			echo -e "Chatrooms: ${ROOM_LIST[@]}" >> $SERVER/$ROOM/$USER
 		
-		elif [ "$CMD" == "c" ];then #Change room
-			tput cup $((HEIGHT-2)) 0
-			read -p "Enter room: " SAY
-			change_room "$SAY"
-			
-		elif [ "$CMD" == "w" ];then #Start message
-			tput cup $((HEIGHT-2)) 0
-			read -p "Say: " SAY
-			send "$SAY"
-			
-		elif [ "$CMD" == "r" ];then #Resend
-			tput cup $((HEIGHT-2)) 0
-			read -p "To user: " SAY
-			send "$SAY $(cat $HOME/.tmp-toolbox-chat)"
-			
-		elif [ "$CMD" == "u" ];then #List users	
-			USER_LIST=()
-			for user in $(cat $SERVER/$ROOM/USER_LIST | sed 's/=.*//');do
-				if [ "$(grep $user $SERVER/$ROOM/USER_LIST | sed 's/.*=//')" == "1" ];then
-					USER_LIST+=("\033[32m[$user]\033[0m")
-				else
-					USER_LIST+=("[$user]")
-				fi
-			done
-			echo -e "Users: ${USER_LIST[@]}" >> $SERVER/$ROOM/$USER	
-			
-		elif [ "$CMD" == "h" ];then #Help
-			tput cup $((HEIGHT-13)) 0
-			tput ed
-			repeat $WIDTH "_"
-			echo -e "\nVersion: $VERSION\n"
-			echo -e "q (Quit)\t\tw (Start message)\t\tl (List rooms)\
-					\nc (Change room)\t\tu (List users)\t\t\tr (Resend)\
-					\nh (Help)"
-			echo ""
-			echo "Write to specific user:"
-			echo "Start message with @USERNAME"
-			echo "To resend failed message press (r) and only type @USERNAME"
-			echo ""
-			read -p "Paused, press enter to continue..."
-		fi
+		case $CMD in
+			q)
+				#Quit
+				abort
+				;;
+			l)
+				#List chatrooms
+				ROOM_LIST=()
+					for room in $(ls $SERVER);do
+						ROOM_LIST+=("[$room]")
+					done
+				echo -e "Chatrooms: ${ROOM_LIST[@]}" >> $SERVER/$ROOM/$USER
+				;;
+			c)
+				#Change chatroom
+				tput cup $((HEIGHT-2)) 0
+				read -p "Enter room: " SAY
+				change_room "$SAY"
+				;;
+			w)
+				#Write message
+				tput cup $((HEIGHT-2)) 0
+				read -p "Say: " SAY
+				send "$SAY"
+				;;
+			r)
+				#Resend
+				tput cup $((HEIGHT-2)) 0
+				read -p "To user: " SAY
+				send "$SAY $(cat $HOME/.tmp-toolbox-chat)"
+				;;
+			u)
+				#List users
+				USER_LIST=()
+				for user in $(cat $SERVER/$ROOM/USER_LIST | sed 's/=.*//');do
+					if [ "$(grep $user $SERVER/$ROOM/USER_LIST | sed 's/.*=//')" == "1" ];then
+						USER_LIST+=("\033[32m[$user]\033[0m")
+					else
+						USER_LIST+=("[$user]")
+					fi
+				done
+				echo -e "Users: ${USER_LIST[@]}" >> $SERVER/$ROOM/$USER
+				;;
+			h)
+				#Help
+				tput cup $((HEIGHT-13)) 0
+				tput ed
+				repeat $WIDTH "_"
+				echo -e "\nVersion: $VERSION\n"
+				echo -e "q (Quit)\t\tw (Start message)\t\tl (List rooms)\
+						\nc (Change room)\t\tu (List users)\t\t\tr (Resend)\
+						\nh (Help)"
+				echo ""
+				echo "Write to specific user:"
+				echo "Start message with @USERNAME"
+				echo "To resend failed message press (r) and only type @USERNAME"
+				echo ""
+				read -p "Paused, press enter to continue..."
+				;;
+			esac
 	done
 }
 
