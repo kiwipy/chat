@@ -106,6 +106,9 @@ function refresh(){
 	tput cup 0 0
 	HEIGHT=$(tput lines)
 	WIDTH=$(tput cols)
+	if [[ "$HEIGHT" -ne "$OLD_HEIGHT" ]] || [[ "$WIDTH" -ne "$OLD_WIDTH" ]];then
+		tput clear
+	fi
 	count="0"
 	for i in $(cat $SERVER/$ROOM/USER_LIST);do
 		((count+=1))
@@ -121,6 +124,8 @@ function refresh(){
 
 	tput cup $((HEIGHT-3)) 0
 	repeat $WIDTH "_"
+	OLD_HEIGHT=$HEIGHT
+	OLD_WIDTH=$WIDTH
 }
 
 function main(){
