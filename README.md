@@ -32,7 +32,7 @@ Run **`toolbox-chat`** and press the following keys to...
 All messages are sent to every user unless the message starts with @username<br>
 
 ## Classic MSN emoji set
-![Image](https://github.com/william-andersson/chat/blob/main/Emojis.png)
+![Image](https://github.com/william-andersson/chat/blob/main/Emoji.png)
 
 ## Limitations
 
