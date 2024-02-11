@@ -42,6 +42,9 @@ elif [ "$1" == "--add" ];then
 		echo "Creating directory /srv/toolbox-chat/$PATH ..."
 		/bin/mkdir /srv/toolbox-chat/$PATH
 		/bin/chmod 777 /srv/toolbox-chat/$PATH
+		echo "Creating directory /srv/toolbox-chat/$PATH/log ..."
+		/bin/mkdir -p /srv/toolbox-chat/$PATH/log
+		/bin/chmod 777 /srv/toolbox-chat/$PATH/log
 		echo "Creating file /srv/toolbox-chat/$PATH/WORDLIST ..."
 		/bin/touch /srv/toolbox-chat/$PATH/WORDLIST
 		/bin/chmod 644 /srv/toolbox-chat/$PATH/WORDLIST
