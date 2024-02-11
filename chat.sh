@@ -5,7 +5,7 @@
 # Website:     https://github.com/william-andersson
 # License:     GPL
 #
-VERSION=2.6
+VERSION=2.7
 
 if [ "$1" == "--help" ];then
 	echo -e "Usage: $0 [OPTIONS]"
@@ -57,9 +57,9 @@ function send(){
 	SENTENCE=()
 	if [ ! -z "$SAY" ];then
 		for word in $SAY;do
-			if [ $(grep "$word" /usr/share/toolbox/emoji ) ];then
+			if [ $(grep -F "$word" /usr/share/toolbox/emoji ) ];then
 				# Add emoji if pattern match
-				SENTENCE+=("$(grep $word /usr/share/toolbox/emoji | sed 's/.*=//')")
+				SENTENCE+=("$(grep -F "$word" /usr/share/toolbox/emoji | sed 's/.*=//')")
 			else
 				SENTENCE+=("$word")
 			fi
@@ -73,12 +73,13 @@ function send(){
 				return
 			fi
 		done
+		CALL_SIGN=$(echo "${SAY:0:1}")
 		CALL_NAME=$(echo $SAY | cut -d " " -f1)
 		NAME=$(echo "${CALL_NAME:1}")
 		MSG=$(echo "${SENTENCE[@]}" | sed "s/^[^ ]* //")
 		 
 		# Send message to user
-		if [[ "$CALL_NAME" == *"@"* ]];then
+		if [[ "$CALL_SIGN" == "@" ]];then
 				if [ -f "$SERVER/$ROOM/$NAME" ];then
 					echo -e "\033[93m@[$NAME]\033[0m: $MSG" >> $SERVER/$ROOM/$USER
 					echo -e "\033[92m[$USER]\033[0m: $MSG" >> $SERVER/$ROOM/$NAME
