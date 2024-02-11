@@ -5,10 +5,7 @@
 # Website:     https://github.com/william-andersson
 # License:     GPL
 #
-#
-# - Setup initial parent path for toolbox-chat (/srv/toolbox-chat/)
-# - Add subdirectory path "default"
-#
+
 if [ "$1" == "--help" ] || [ -z "$1" ];then
 	echo -e "Usage: $0 <OPTION> [NAME]"
 	echo -e "Setup new chatroom for toolbox-chat\n"
@@ -28,6 +25,9 @@ if [ "$1" == "--init" ];then
 	echo "Creating directory /srv/toolbox-chat/default ..."
 	/bin/mkdir -p /srv/toolbox-chat/default
 	/bin/chmod 777 /srv/toolbox-chat/default
+	echo "Creating directory /srv/toolbox-chat/default/log ..."
+	/bin/mkdir -p /srv/toolbox-chat/default/log
+	/bin/chmod 777 /srv/toolbox-chat/default/log
 	echo "Creating file /srv/toolbox-chat/WORDLIST ..."
 	/bin/touch /srv/toolbox-chat/default/WORDLIST
 	/bin/chmod 644 /srv/toolbox-chat/default/WORDLIST

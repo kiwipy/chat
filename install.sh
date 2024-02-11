@@ -14,6 +14,7 @@ DEPENDENCIES=("")
 
 install -v -C -m 775 -o root chat.sh /usr/bin/toolbox-chat
 install -v -C -m 775 -o root setup.sh /usr/bin/toolbox-chat-setup
+install -v -D -C -m 555 -o root emoji /usr/share/toolbox/emoji
 
 if [ ! -z "$DEPENDENCIES" ];then
 	/usr/bin/toolbox-depin ${DEPENDENCIES[@]}

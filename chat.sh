@@ -5,7 +5,7 @@
 # Website:     https://github.com/william-andersson
 # License:     GPL
 #
-VERSION=2.4
+VERSION=2.6
 
 if [ "$1" == "--help" ];then
 	echo -e "Usage: $0 [OPTIONS]"
@@ -18,6 +18,7 @@ fi
 
 function abort() {
 	# Ctrl-c SIGINT function
+	cp $SERVER/$ROOM/$USER $SERVER/$ROOM/log/$USER.$(date +%d-%m-%Y.%H:%M)
 	echo "" > $SERVER/$ROOM/$USER
 	set_status
 	reset
@@ -53,7 +54,17 @@ function set_status(){
 
 function send(){
 	SAY="$1"
+	SENTENCE=()
 	if [ ! -z "$SAY" ];then
+		for word in $SAY;do
+			if [ $(grep "$word" /usr/share/toolbox/emoji ) ];then
+				# Add emoji if pattern match
+				SENTENCE+=("$(grep $word /usr/share/toolbox/emoji | sed 's/.*=//')")
+			else
+				SENTENCE+=("$word")
+			fi
+		done
+	
 		for word in ${WORDLIST[@]};do
 			if [[ "${SAY,,}" == *"${word,,}"* ]];then
 				# check if string contains forbidden word
@@ -64,8 +75,8 @@ function send(){
 		done
 		CALL_NAME=$(echo $SAY | cut -d " " -f1)
 		NAME=$(echo "${CALL_NAME:1}")
-		MSG=$(echo $SAY | sed "s/^[^ ]* //")
-		
+		MSG=$(echo "${SENTENCE[@]}" | sed "s/^[^ ]* //")
+		 
 		# Send message to user
 		if [[ "$CALL_NAME" == *"@"* ]];then
 				if [ -f "$SERVER/$ROOM/$NAME" ];then
@@ -79,14 +90,14 @@ function send(){
 		# Send message to all user
 			for id in $(cat $SERVER/$ROOM/USER_LIST | sed 's/=.*//');do
 				if [ "$id" == "$USER" ];then
-					echo -e "\033[93m[$USER]\033[0m: $SAY" >> $SERVER/$ROOM/$USER
+					echo -e "\033[93m[$USER]\033[0m: "${SENTENCE[@]}"" >> $SERVER/$ROOM/$USER
 				else
 					# Only send public messages to online users
 					if [ "$(grep $id $SERVER/$ROOM/USER_LIST | sed 's/.*=//')" != "0" ];then
 						if [ "$ID" == "admin" ];then
 							echo -e "\033[94m[$ID]: $SAY\033[0m" >> $SERVER/$ROOM/$id
 						else
-							echo -e "\033[97m[$USER]\033[0m: $SAY" >> $SERVER/$ROOM/$id
+							echo -e "\033[97m[$USER]\033[0m: "${SENTENCE[@]}"" >> $SERVER/$ROOM/$id
 						fi
 					fi
 				fi
@@ -183,6 +194,24 @@ function main(){
 				done
 				echo -e "Users: ${USER_LIST[@]}" >> $SERVER/$ROOM/$USER
 				;;
+			e)
+				#List smileys
+				tput cup $((HEIGHT-8)) 0
+				tput ed
+				repeat $WIDTH "_"
+				count="0"
+				for i in $(cat /usr/share/toolbox/emoji);do
+					if [ "$count" == $((WIDTH/8)) ];then
+						echo ""
+						count="0"
+					else
+						echo -ne "$(grep $i /usr/share/toolbox/emoji | sed 's/.*=//') $(grep $i /usr/share/toolbox/emoji | sed 's/=.*//')\t"
+						((count+=1))
+					fi
+				done
+				echo -e "\n"
+				read -p "Paused, press enter to continue..."
+				;;
 			h)
 				#Help
 				tput cup $((HEIGHT-13)) 0
@@ -191,7 +220,7 @@ function main(){
 				echo -e "\nVersion: $VERSION\n"
 				echo -e "q (Quit)\t\tw (Start message)\t\tl (List rooms)\
 						\nc (Change room)\t\tu (List users)\t\t\tr (Resend)\
-						\nh (Help)"
+						\ne (List emoji)\t\th (Help)"
 				echo ""
 				echo "Write to specific user:"
 				echo "Start message with @USERNAME"
