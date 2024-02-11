@@ -34,7 +34,8 @@ All messages are sent to every user unless the message starts with @username<br>
 ## Classic MSN emoji set
 Almost all the original* MSN/ICQ emojis!
 ![Image](https://github.com/william-andersson/chat/blob/main/Emoji.png)
-> Not the original design only the selection.
+> Not the original design only the selection.<br>
+> GNOME Characters [Gnome Characters](https://apps.gnome.org/en-GB/Characters/)
 
 ## Limitations
 
