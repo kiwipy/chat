@@ -25,10 +25,14 @@ Run **`toolbox-chat`** and press the following keys to...
 > *l - list available chatrooms*<br>
 > *c - change chatroom*<br>
 > *r - resend message if wrong nickname was entered*<br>
+> *e - list emojis<br>
 > *h - for help*<br>
 > *q - quit*<br>
 
 All messages are sent to every user unless the message starts with @username<br>
+
+## Classic MSN emoji set
+![Image](https://github.com/william-andersson/chat/blob/main/Emojis.png)
 
 ## Limitations
 
