@@ -25,10 +25,17 @@ Run **`stim`** and press the following keys to...
 > *l - list available chatrooms*<br>
 > *c - change chatroom*<br>
 > *r - resend message if wrong nickname was entered*<br>
+> *e - list emojis*<br>
 > *h - for help*<br>
 > *q - quit*<br>
 
 All messages are sent to every user unless the message starts with @username<br>
+
+## Classic MSN emoji set
+Almost all the original* MSN/ICQ emojis!
+![Image](https://github.com/william-andersson/chat/blob/main/Emoji.png)
+> \*Not the original design only the selection.<br>
+> Provided by GNOME Characters [Gnome Characters App](https://apps.gnome.org/en-GB/Characters/) Copyright 2014-2018 Daiki Ueno
 
 ## Limitations
 
