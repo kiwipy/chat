@@ -23,11 +23,13 @@ Default location is /srv/stim and the default chatroom is "default".<br>
 > Only use this on a virtual machine on your local network!
 
 Navigate to the server folder and run **`sudo ./setup.sh`**<br>
-This will create the user (signup), you'll have to set a password.<br>
-This user has a special bashrc file that automatically executes new_account.sh so people<br>
-logging in with signup@ip can create their own account. If the scipt is exited the session is logged out.<br>
-Also when a user logs in STIM is automatically started and if exited the session logs out.<br>
-The IP is logged when account was created sucessfully and blocked for further signups.
+#### HOW IT WORKS
+>- This will create the user (signup), you'll have to set a password.<br>
+>- This user has a special bashrc file that automatically executes new_account.sh so people logging in with
+>signup@ip can create their own account.<br>
+>- If the scipt is exited the session is logged out.<br>
+>- When a user logs in, STIM is automatically started and if exited the session logs out.<br>
+>- The IP is logged when account was created sucessfully and blocked for further signups.
 
 ## Usage
 Run **`stim`** and press the following keys to...
@@ -59,5 +61,5 @@ Only shorter messages work, return key = send
 > - [x] Rename to STIM (Simple Terminal Instant Messanger)<br>
 > - [ ] Maybe add support for multiline message<br>
 > - [ ] Maybe add a chatbot<br>
-> - [ ] Ssh server signup solution
+> - [x] Ssh server signup solution
 
