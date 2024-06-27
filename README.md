@@ -4,8 +4,8 @@
 
 ## Make it work
 
-Install with **`sudo ./install.sh`** and then run **`sudo stim-setup --init`** to create the server.<br>
-Default server location is /srv/stim and the default chatroom is "default".<br>
+Install with **`sudo ./install.sh`** and then run **`sudo stim-setup --init`** to setup the application.<br>
+Default location is /srv/stim and the default chatroom is "default".<br>
 
 
 > [!NOTE]
@@ -16,6 +16,17 @@ Default server location is /srv/stim and the default chatroom is "default".<br>
 >[!TIP]
 > :green_square: Ban user by changing owner of corresponding /srv/stim/default/username file to root.<br>
 > :green_square: Send message to everyone as admin with **`sudo stim --admin <ROOM> <"MESSAGE">`**.<br>
+
+## Server signup feature
+>[!WARING] This is most definitely a security risk!<br>
+Only use this on a virtual machine on your local network!
+
+Navigate to the server folder and run **`sudo ./setup.sh`**<br>
+This will create the user (signup), you'll have to set a password.<br>
+This user has a special bashrc file that automatically executes new_account.sh so people<br>
+logging in with signup@ip can create their own account. If the scipt is exited the session is logged out.<br>
+Also when a user logs in STIM is automatically started and if exited the session logs out.<br>
+The IP is logged when account was created sucessfully and blocked for further signups.
 
 ## Usage
 Run **`stim`** and press the following keys to...
@@ -48,3 +59,4 @@ Only shorter messages work, return key = send
 > - [ ] Maybe add support for multiline message<br>
 > - [ ] Maybe add a chatbot<br>
 > - [ ] Ssh server signup solution
+
