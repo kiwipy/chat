@@ -18,8 +18,9 @@ Default location is /srv/stim and the default chatroom is "default".<br>
 > :green_square: Send message to everyone as admin with **`sudo stim --admin <ROOM> <"MESSAGE">`**.<br>
 
 ## Server signup feature
->[!WARING] This is most definitely a security risk!<br>
-Only use this on a virtual machine on your local network!
+> [!WARNING]
+> This is most definitely a security risk!<br>
+> Only use this on a virtual machine on your local network!
 
 Navigate to the server folder and run **`sudo ./setup.sh`**<br>
 This will create the user (signup), you'll have to set a password.<br>
