@@ -55,11 +55,3 @@ Almost all the original* MSN/ICQ emojis!
 
 Only shorter messages work, return key = send
 
-## TODO
-
-> - [x] Adapt to window size<br>
-> - [x] Rename to STIM (Simple Terminal Instant Messanger)<br>
-> - [ ] Maybe add support for multiline message<br>
-> - [ ] Maybe add a chatbot<br>
-> - [x] Ssh server signup solution
-
