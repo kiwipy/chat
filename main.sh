@@ -2,8 +2,8 @@
 #
 # Application: stim (Github version)
 # Comment:     Simple Terminal Instant Messanger
-# Copyright:   William Andersson 2024
-# Website:     https://github.com/william-andersson
+# Copyright:   2024, William Andersson
+# Website:     https://github.com/kiwipy/chat
 # License:     GPL
 #
 VERSION=3.0
