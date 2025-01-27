@@ -1,6 +1,6 @@
 # Simple Terminal Instant Messanger
 > [!IMPORTANT]
-> This entire project is set for complete re-write sometime in the future and will not recieve any updates untill then.<br>
+> This entire project is set for possible re-write sometime in the future and will not recieve any updates untill then.<br>
 
 ### Let users on ssh server chat with each other! :smiley:<br>
 ![Screenshot](https://github.com/william-andersson/chat/blob/main/Screenshot2.png)
